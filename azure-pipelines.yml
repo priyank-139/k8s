@@ -15,9 +15,9 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '38a9bed5-24d1-42a1-9abe-ebf1e4134f15'
-  imageRepository: 'attendance'
+  imageRepository: '${{ parameters.image }}'
   containerRegistry: 'registry139.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/attendance/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/${{ parameters.image }}/Dockerfile'
   tag: '$(Build.BuildId)'
 
 
@@ -33,18 +33,18 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    # - task: Docker@2
-    #   displayName: Build and push an image to container registry
-    #   inputs:
-    #     command: buildAndPush
-    #     repository: $(imageRepository)
-    #     dockerfile: $(dockerfilePath)
-    #     containerRegistry: $(dockerRegistryServiceConnection)
-    #     tags: |
-    #       $(tag)
     - task: Docker@2
+      displayName: Build and push an image to container registry
       inputs:
-        containerRegistry: 'registry139'
-        repository: '$(image)'
-        command: 'buildAndPush'
-        Dockerfile: ${{ parameters.image }}/Dockerfile
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'registry139'
+    #     repository: '$(image)'
+    #     command: 'buildAndPush'
+    #     Dockerfile: ${{ parameters.image }}/Dockerfile
