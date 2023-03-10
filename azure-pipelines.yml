@@ -47,4 +47,4 @@ stages:
         containerRegistry: 'registry139'
         repository: '$(image)'
         command: 'buildAndPush'
-        Dockerfile: 'parameters.image/Dockerfile'
+        Dockerfile: ${{ parameters.image }}/Dockerfile
