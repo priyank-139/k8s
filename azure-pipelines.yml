@@ -19,7 +19,7 @@ variables:
   containerRegistry: 'registry139.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/attendance/Dockerfile'
   tag: '$(Build.BuildId)'
-  image: '$(parameters.image.values)'
+
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -47,4 +47,4 @@ stages:
         containerRegistry: 'registry139'
         repository: '$(image)'
         command: 'buildAndPush'
-        Dockerfile: '$(image)/Dockerfile'
+        Dockerfile: 'parameters.image/Dockerfile'
